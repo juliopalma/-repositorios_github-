@@ -33,20 +33,39 @@ async function getRepos(username) {
 async function getUser(username) {
     const valGithubs = await request(username);
 
-    // $("#resultados").append(`https://api.github.com/users/${valNomProp}/repos?page=${valPagina}&per_page=${valRepoPagina}`);
+    if (valGithubs.name == undefined) {
 
-    $("#imgUsuario").attr("src", valGithubs.avatar_url);
+        $("#infousuario").hide();
 
-    $("#nomUsuario").html("Nombre Usuario: " + valGithubs.name);
+        $("#imgUsuario").attr("");
 
-    $("#nombreLogin").html("Nombre de login: " + valGithubs.login);
+        $("#nomUsuario").html("");
 
-    $("#cantRepositorio").html("Cantidad de Repositorios: " + valGithubs.public_repos);
+        $("#nombreLogin").html("");
 
-    $("#localidad").html("Localidad: " + valGithubs.location);
+        $("#cantRepositorio").html("");
 
-    $("#tipoUsuario").html("Tipo de usuario: " + valGithubs.type)
+        $("#localidad").html("");
 
+        $("#tipoUsuario").html("");
+
+    } else {
+
+        $("#infousuario").show();
+
+        $("#imgUsuario").attr("src", valGithubs.avatar_url);
+
+        $("#nomUsuario").html("Nombre Usuario: " + valGithubs.name);
+
+        $("#nombreLogin").html("Nombre de login: " + valGithubs.login);
+
+        $("#cantRepositorio").html("Cantidad de Repositorios: " + valGithubs.public_repos);
+
+        $("#localidad").html("Localidad: " + valGithubs.location);
+
+        $("#tipoUsuario").html("Tipo de usuario: " + valGithubs.type);
+
+    }
 }
 
 async function request(path) {
@@ -57,7 +76,7 @@ async function request(path) {
         const urlGithub = `https://api.github.com/users/${path}`;
         const datos = await fetch(urlGithub);
         const valGitHubs = await datos.json();
-        // console.log(valGitHubs);
+
         return valGitHubs
 
     } catch (e) {
